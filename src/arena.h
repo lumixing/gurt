@@ -8,7 +8,7 @@ typedef struct {
 	size_t size;
 } Arena;
 
-static inline Arena arena_init(size_t size, bool dynamic) {
+static inline Arena arena_init(size_t size) {
 	char *buf = (char*)malloc(size);
 	if (!buf) {
 		perror("could not init arena");

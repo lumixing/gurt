@@ -2,6 +2,8 @@
 #include <string.h>
 #include "arena.h"
 
+#define STR_NEW_ZERO_CAP 64
+
 typedef struct {
 	char* buf;
 	size_t len;
@@ -9,13 +11,20 @@ typedef struct {
 } str;
 
 static Arena str_arena;
+static Arena str_cstr_arena;
 
 static inline void str_init_arena(size_t size) {
-	str_arena = arena_init(size, true);
+	str_arena = arena_init(size);
+	str_cstr_arena = arena_init(size);
 }
 
 static inline void str_free_arena() {
 	arena_free(str_arena);
+	arena_free(str_cstr_arena);
+}
+
+static inline void str_clear_cstr_arena() {
+	arena_clear(&str_cstr_arena);
 }
 
 static inline str str_new(char *strlit) {
@@ -29,10 +38,28 @@ static inline str str_new(char *strlit) {
 	return (str){buf, strlitlen, strlitlen};
 }
 
-static inline char *str_cstr(str s) {
-	char *buf = (char*)arena_alloc(&str_arena, s.len + 1);
+static inline str str_new_zero() {
+	char *buf = (char*)arena_alloc(&str_arena, STR_NEW_ZERO_CAP);
 	if (!buf) {
-		printf("error: not enough space to alloc for cstr (%zu free but %zu needed)\n", str_arena.used - str_arena.size, s.len + 1);
+		perror("could not init str");
+		exit(1);
+	}
+	return (str){buf, 0, STR_NEW_ZERO_CAP};
+}
+
+static inline str str_new_size(size_t size) {
+	char *buf = (char*)arena_alloc(&str_arena, size);
+	if (!buf) {
+		perror("could not init str");
+		exit(1);
+	}
+	return (str){buf, 0, size};
+}
+
+static inline char *str_cstr(str s) {
+	char *buf = (char*)arena_alloc(&str_cstr_arena, s.len + 1);
+	if (!buf) {
+		printf("error: not enough space to alloc for cstr (%zu free but %zu needed)\n", str_cstr_arena.size - str_cstr_arena.used, s.len + 1);
 		exit(1);
 	}
 	memcpy(buf, s.buf, s.len + 1);
@@ -49,6 +76,10 @@ static inline void str_concat(str *s1, str s2) {
 	}
 	memcpy(s1->buf + s1->len, s2.buf, s2.len);
 	s1->len += s2.len;
+}
+
+static inline bool str_eq(str s1, str s2) {
+	return s1.len == s2.len && memcmp(s1.buf, s2.buf, s1.len) == 0;
 }
 
 static inline void str_debug(str s) {
