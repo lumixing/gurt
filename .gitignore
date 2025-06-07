@@ -1,0 +1,7 @@
+*
+!.gitignore
+!src/
+!*.c
+!*.h
+!README.md
+!gurt.png

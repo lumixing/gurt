@@ -1,4 +1,5 @@
 #define _GNU_SOURCE // for pthread_tryjoin_np
+#define HTTPSERVER_IMPL
 
 #include "log.h"
 #include <ncurses.h>
