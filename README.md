@@ -1,5 +1,5 @@
 ## gurt, a simple spotify client
-<img src="gurt.png" style="float:right; width: 256px;"></img>
+<img src="gurt.png" align="right" style="float:right; width: 256px;"></img>
 written in c using:
 - [ncurses](https://github.com/mirror/ncurses) for tui
 - [curl](https://github.com/curl/curl) for http client
