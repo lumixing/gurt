@@ -24,9 +24,10 @@
 <img src="gurt.png" align="right" style="float:right; width: 256px;"></img>
 written in c using:
 - [ncurses](https://github.com/mirror/ncurses) for tui
-- [curl](https://github.com/curl/curl) for http client
-- [mongoose](https://github.com/cesanta/mongoose) for http server
-- [json-c](https://github.com/json-c/json-c) for json parsing
+- [curl](https://github.com/curl/curl) for http client requests
+- [mongoose](https://github.com/cesanta/mongoose) for http server (auth)
+- [json-c](https://github.com/json-c/json-c) for json parsing (http bodies)
+- [msgpack-c](https://github.com/msgpack/msgpack-c/tree/c_master) for caching
 - [librespot](https://github.com/librespot-org/librespot) for spotify player
 - [fifo](https://en.wikipedia.org/wiki/Named_pipe) for realtime communication between librespot and gurt
 - [pthread](https://en.wikipedia.org/wiki/Segmentation_fault) for multithreading
