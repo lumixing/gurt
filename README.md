@@ -36,7 +36,8 @@ written in c using:
 
 ### disclaimer
 this is still a work in proress and my first ~~big~~ not small c project, so use at your own risk, for now.  
-also this is only tested on linux and probably only works on linux (using lots of nonportable functions such as `pthread_tryjoin_np`). no plans for other targets! :)
+also this is only tested on linux and probably only works on linux (using lots of nonportable functions such as `pthread_tryjoin_np`). no plans for other targets! :)  
+also this only compiles in gcc since it uses [c-defer](https://github.com/cmhood/c-defer).
 
 <!-- ### usage
 first you need to install [librespot](https://github.com/librespot-org/librespot) (`yay -S librespot` for example on arch (btw))  
